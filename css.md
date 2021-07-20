@@ -100,7 +100,7 @@ W3C css2.1规范中引入了`FC(格式化上下文)`的概念。指页面中的�
 
 ---
 
-## 2. flex配合`margin: auto`
+## [2. flex配合`margin: auto`](#flex配合margin)
 
 >`display: flex`可以元素环境变为`FFC(自适应格式上下文 )`
 ```
@@ -200,9 +200,127 @@ flex布局是我们经常使用的，以上代码会生成如下图所示样式�
   <img src="./static/css.md/input2.png">
 </p>
 
+## 3. 隐藏文字的两种方式
+```css
+/* 设置字体大小为0 */
+div {
+  font-size: 0
+}
+/* 设置缩进 */
+div {
+  text-indent: -1000px
+}
+```
+通过以上两种方式可以实现隐藏文字的效果
 
+## 4. 实现居中的简单方式（相较于常用的flex-direction）
 
+平时在实现让div水平垂直居中的时候通常都是用的`flex-direction`，
+不过使用以下方式可以更简单达到相同效果
+```css
+.parent {
+  display: flex
+}
+.parent .child {
+  margin: auto
+}
+```
+原理可以参照 [内容](#flex配合margin)
 
+## 5. 神奇的`background-attachment: fixed`属性
+```css
+  body {
+    height: 200vh;
+  }
+  .out {
+    width: 300px;
+    height: 200px;
+    overflow: auto;
+  }
+  .out div {
+    height: 300px;
+    background: url('./5437842ad05a5.jpg') 100% 100%;
+    background-size: cover;
+    background-attachment: fixed;
+  }
+```
+```html
+<body>
+<div class="out">
+  <div>
+    阿斯顿阿三大苏打实打实大苏打实打实阿斯顿阿三大苏打实打实大苏打实打实阿斯顿阿三大苏打实打实大苏打实打实阿斯顿阿三大苏打实打实大苏打实打实阿斯顿阿三大苏打实打实大苏打实打实阿斯顿阿三大苏打实打实大苏打实打实阿斯顿阿三大苏打实打实大苏打实打实阿斯顿阿三大苏打实打实大苏打实打实
+  </div>
+</div>
+</body>
+```
+会发现背景图片是`绝对定位`在`显示位置`的，不会随着页面滚动而滚动，可以实现那种镂空图片过度效果
+
+## 5. `animation`动画暂停
+```css
+div {
+  animation: rotate 1s linear infinite
+}
+div:hover {
+  animation-play-state: paused
+}
+```
+
+## 6. `fit-content`设置宽度包裹内容
+块级元素可以设置`width: fit-content`达到`display: inline-block`的效果
+
+## 7. `min-content/max-content`设置宽度包裹内容/撑开内容
+元素可以设置`width: min-content`或`width: max-content`达到包裹内容或撑开内容的效果
+
+## 8. css变量
+```css
+--percent: 50%;
+div {
+  width: var(--percent)
+}
+```
+
+## 9. 一个div实现进度条
+```css
+div {
+  --p: 60%;
+  --c: #0ff;
+  height: 10px;
+  background-color: silver;
+  border-radius: 30px;
+  background-size: 100%, var(--p);
+  background-repeat: no-repeat;
+  background-image: radial-gradient(closest-side circle at var(--p), var(--c), var(--c) 100%, transparent), linear-gradient(var(--c), var(--c));
+}
+```
+
+## 10. `resize`属性让div可以类似textarea拖动大小
+```css
+div {
+  overflow: hidden;
+  resize: auto
+}
+```
+
+## 11. 使用`grid`让footer吸底
+`grid-template-rows`属性指定网格布局中行的数量（和高度）。值是以空格分隔的列表，其中每个值指定相应行的高度。
+```css
+body {
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr auto
+}
+```
+```html
+<body>
+  <header>头部</header>
+  <main>内容</main>
+  <footer>底部</footer>
+</body>
+```
+效果如图
+<p>
+<img src="./static/css.md/grid.png" />
+</p>
 
 
 ### 参考文献
