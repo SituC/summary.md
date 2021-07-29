@@ -62,3 +62,6 @@ t.sayHi()
 console.log(t instanceof Person) // true
 console.log(t instanceof Teacher) // true
 ```
+
+### 参考
+[js原型链与继承不要再被问倒了](https://juejin.cn/post/6844903475021627400#heading-0)
