@@ -8,6 +8,9 @@
   - `max-age=t`: 资源会在t秒后失效
   - `no-cache`: 使用协商缓存
   - `no-store`: 不适用缓存
+  - `immutable`: 相应内容将一直不会改变，一般和max-age共同使用，对缓存生命周期控制的互补性属性，有了此属性客户端就不会再向服务端发送验证请求。因此客户端不应发送重新验证请求头（例如If-None-Match或If-Modified-Since）来检查更新，即使用户显式地刷新页面
+
+```Cache-Control: max-age=365000000, immutable```
 
 # 协商缓存
 当cache-control为no-cache时启用协商缓存。协商缓存需要对比判断标识是否可以使用缓存。
