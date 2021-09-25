@@ -61,7 +61,7 @@ class MyPromise {
     const nextPromise = new MyPromise((resolve, reject) => {
       // 这里的内容在执行器中，会立即执行
       if (this.status === FULFILLED) {
-        // 创建一个微任务等待 promise2 完成初始化
+        // 创建一个微任务等待 nextPromise 完成初始化
         queueMicrotask(() => {
           try {
             // 获取成功回调函数的执行结果
@@ -128,3 +128,28 @@ const resolvePromise = (nextPromise, x, resolve, reject) => {
 }
 
 module.exports = MyPromise
+
+class MyPromise2 {
+  status = PENDING
+  onFulfilled = null
+  onRejected = null
+  result = null
+  reason = null
+  onFulfilledCallback = []
+  onRejectedCallback = []
+  constructor (fn) {
+    fn(this.onFulfilled, this.onRejected)
+  }
+
+  then() {
+    return new MyPromise2((resolve, reject) => {
+
+    })
+  }
+  static resolve() {
+
+  }
+  static reject() {
+
+  }
+}
