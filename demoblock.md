@@ -29,6 +29,12 @@ Kagol带头讨论了这个问题。大家也给出了自己的想法。
 
 不过最终很幸运的发现了两款支持vitepress的demo展示插件`vitepress-theme-demoblock`和`vitepress-for-component`。但最后调研发现`vitepress-for-component`是 fork 自 `vitepress`的脚手架，并不单单是一个插件了，不好集成到devui中，最后就确定了`vitepress-theme-demoblock`。
 
+● 引入这个功能的背景
+● 技术方案的选型
+● 遇到的问题（与开源作者的沟通）
+● demoblock的引入和效果
+
+
 
 
 
