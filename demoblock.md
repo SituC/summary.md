@@ -37,10 +37,10 @@ npm install -D vitepress-theme-demoblock
 yarn add -D vitepress-theme-demoblock
 ```
 
-### 用法
+### 注入插件
 首先我们得知道`vitepress`关于`markdown`的拓展规则，vitepress 使用`markdown-it`作为 markdown 渲染器，具体可以[查看](https://vitepress.vuejs.org/guide/markdown.html#advanced-configuration)
 
-1. 我们得将插件在`vitepress`的`config.js`中注册，如下面这样：
+我们得将插件在`vitepress`的`config.js`中注册，如下面这样：
 ```js
 module.exports = {
   markdown: {
@@ -52,9 +52,47 @@ module.exports = {
   }
 }
 ```
+#### demoBlockPlugin插件的核心
+`demoBlockPlugin`是插件的核心方法，函数内部注册了三个方法，如下：
+```js
+//  vitepress-theme-demoblock/demoblock/index.js
+const demoBlockPlugin = (md, options = {}) => {
+  md.use(blockPlugin, options)
+  md.use(codePlugin, options)
+  md.use(renderPlugin, options)
+}
+```
+- blockPlugin： `blockPlugin`的作用是根据`markdown-it-container`插件获取到的md文档所有内容转换成的AST树，从树中获取到被语法` :::demo ` 包裹的部分，输出成大概如下的字符串格式。
+```js
+// content就是需要渲染组件的代码内容
+`<demo sourceCode="${content}">
+  <!--vue-demo:${content}:vue-demo-->
+</demo>`
+```
+- codePlugin： `codePlugin`作用是生成描述部分`description`和代码展示部分`highlight`，使用了vue的具名插槽渲染。其中`description`可以满足md语法。比如下面这样使用。
+```md
+:::demo 使用`size`、`style`属性来定义 Card 的样式。
+    ```vue
+    <template>
+      <div class="card-wrap">
+        <div class="card">{{ title }}</div>
+      </div>
+    </template>
+    ```
+:::
+```
+最终生成的效果如图所示
+<p>
+<img src="./static/css.md/1232.png">
+</p>
+
+红色部分就是`description`，黑色部分对应`highlight`
+
+- renderPlugin：顾名思义渲染函数，将上面`blockPlugin`函数返回的`<!--vue-demo:${content}:vue-demo-->`部分，通过正则表达式的形式获取到需要输出的`template, script, style`内容，最终渲染出来。
+
 > `devui`将所有`docs/.vitepress/config.js`中的配置项都单独抽离了逻辑，在阅读项目源码的时候需要注意下。
 
-2. 注册主题
+### 注入主题与插件的组件
 
 vitepress的主题拓展可以[查看](https://vitepress.vuejs.org/guide/theming.html#extending-the-default-theme)
 
@@ -68,11 +106,11 @@ import { registerComponents } from './register-components.js'
 
 export default {
   enhanceApp({ app }) {
-    registerComponents(app) // 这个是vitepress-theme-demoblock的主题
+    registerComponents(app)
   }
 }
 ```
-那么上面引入的`register-components.js`怎么来的呢？这个文件其实不需要我们创建，插件内部会使用脚本让项目在启动时会自动创建该文件，**这样的好处是所有的插件组件注册都不需要我们手动进行，全部在插件内部就能确定**，未来插件有任何改动都不需要修改这里。该文件长这样
+那么上面引入的`register-components.js`怎么来的呢？这个文件其实不需要我们创建，可以使用脚本自动创建该文件，**这样的好处是所有需要的插件组件都不需要我们手动进行注册，全部在插件内部就能确定**，未来插件有任何改动都不需要修改这里。该文件长这样
 ```js
 // register-components.js
 import Demo from 'vitepress-theme-demoblock/components/Demo.vue'
@@ -97,8 +135,6 @@ yarn register:components
 至此，`vitepress-theme-demoblock`的就在vitepress中注册成功了
 
 # 使用与效果
-### 使用
-
 注册好插件过后，我们只需要在demo展示文件`index.md`中使用固定语法包裹代码就能自动生成组件demo以及代码块
 ```md
     :::demo 使用`sm`，`''`，`lg`来定义`Search`基本类型
