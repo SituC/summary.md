@@ -2,7 +2,6 @@
 
 let arr = [0, 2, 4, 2, 3, 1]
 
-
 function sort(arr) {
   let len = arr.length
   if (len === 1) return arr
@@ -31,5 +30,5 @@ function merge(left, right) {
   return tempArr
 }
 
-console.log(sort(arr))
+
 
