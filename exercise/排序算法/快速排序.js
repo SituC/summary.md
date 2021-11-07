@@ -46,18 +46,39 @@ function swap (arr, i, j) { [arr[i], arr[j]] = [arr[j], arr[i]]
 }
 console.log(quickSort(arr))
 
-var quickSort = function (arr) { 　　
-  if (arr.length <= 1) { return arr; } 　　
-  var pivotIndex = Math.floor(arr.length / 2)
-  var pivot = arr.splice(pivotIndex, 1)[0]
-  var left = []
-  var right = []
-  for (var i = 0; i < arr.length; i++) { 　　　　
-    if (arr[i] < pivot) { 　　　　　　
-      left.push(arr[i]); 　　　　
-    } else { 　　　　　　
-      right.push(arr[i]); 　　　　
-    } 　　
-  } 　　
-  return quickSort(left).concat([pivot], quickSort(right)); 
+var quickSort = function (arr, left = 0, right = arr.length - 1) { 　　
+  if (arr.length > 1) {
+    let lineIndex = getLineIndex(arr, left, right)
+    if (left < lineIndex - 1) {
+      arr = quickSort(arr, left, lineIndex - 1)
+    }
+    if (right > lineIndex) {
+      arr = quickSort(arr, lineIndex - 1, right)
+    }
+  }
+  return arr
+}
+
+function getLineIndex(arr, leftIndex, rightIndex) {
+  let pivotValue = arr[Math.floor(left + (right - left) / 2)]
+  let l = leftIndex
+  let r = rightIndex
+  while(l <= r) {
+    while(arr[l] < pivotValue) {
+      l++
+    }
+    while(arr[r] > pivotValue) {
+      r--
+    }
+    if (l <= r) {
+      swep(arr, l, r)
+      l++
+      r--
+    }
+  }
+  return l
+}
+
+function swer(arr, l, r) {
+  [arr[l], arr[r]] = [arr[r], arr[l]]
 }
