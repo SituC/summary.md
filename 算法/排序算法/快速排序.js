@@ -9,6 +9,8 @@ function quickSort (arr, left = 0 , right = arr.length - 1) {
       quickSort(arr, left, lineIndex - 1)
     }
     // 如果右边子数组长度不小于1，则递归快排这个子数组
+    // partition中对于左右指针的操作最后会变成左指针 - 右指针 = 1，也就是以左指针为界限，左边的值都不大于它，右边的值都不小于它（包括右指针的值）
+    // 比如 [1,2,3,4]  [5,6]，下面的lineIndex就代表5的下标，5是包括在右子数组里面的
     if (lineIndex < right) {
       quickSort(arr, lineIndex, right)
     }
@@ -25,9 +27,11 @@ function partition (arr, left, right) {
   let j = right
   // 当左右指针不越界时，循环执行以下逻辑
   while(i <= j) {
+    // 左边值小于基准值，右移左指针
     while(arr[i] < pivotValue) {
       i++
     }
+    // 右边值大于基准值，左移右指针
     while(arr[j] > pivotValue) {
       j--
     }
@@ -44,34 +48,34 @@ function partition (arr, left, right) {
 
 function swap (arr, i, j) { [arr[i], arr[j]] = [arr[j], arr[i]]
 }
-console.log(quickSort(arr))
+// console.log(quickSort(arr))
 
-var quickSort = function (arr, left = 0, right = arr.length - 1) { 　　
+
+const quickSort2 = (arr, left = 0, right = arr.length - 1) => {
   if (arr.length > 1) {
-    let lineIndex = getLineIndex(arr, left, right)
-    if (left < lineIndex - 1) {
-      arr = quickSort(arr, left, lineIndex - 1)
+    const midIndex = findMidIndex(arr, left, right)
+    if (midIndex < right) {
+      quickSort2(arr, midIndex, right)
     }
-    if (right > lineIndex) {
-      arr = quickSort(arr, lineIndex - 1, right)
+    if (midIndex - 1 > left) {
+      quickSort2(arr, left, midIndex - 1)
     }
   }
   return arr
 }
 
-function getLineIndex(arr, leftIndex, rightIndex) {
-  let pivotValue = arr[Math.floor(left + (right - left) / 2)]
-  let l = leftIndex
-  let r = rightIndex
+const findMidIndex = (arr, left, right) => {
+  const pivot = arr[Math.floor(left + (right - left) / 2)]
+  let l = left, r = right
   while(l <= r) {
-    while(arr[l] < pivotValue) {
+    while (arr[l] < pivot) {
       l++
     }
-    while(arr[r] > pivotValue) {
+    while (arr[r] > pivot) {
       r--
     }
     if (l <= r) {
-      swep(arr, l, r)
+      [arr[l], arr[r]] = [arr[r], arr[l]]
       l++
       r--
     }
@@ -79,6 +83,4 @@ function getLineIndex(arr, leftIndex, rightIndex) {
   return l
 }
 
-function swer(arr, l, r) {
-  [arr[l], arr[r]] = [arr[r], arr[l]]
-}
+console.log(quickSort2(arr))
