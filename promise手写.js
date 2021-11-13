@@ -56,7 +56,6 @@ class MyPromise {
     // 如果不传，就使用默认函数
     onFulfilled = typeof onFulfilled === 'function' ? onFulfilled : value => value;
     onRejected = typeof onRejected === 'function' ? onRejected : reason => {throw reason};
-
     // 为了链式调用创建一个MyProise并在后面return出去
     const nextPromise = new MyPromise((resolve, reject) => {
       // 这里的内容在执行器中，会立即执行
@@ -129,27 +128,94 @@ const resolvePromise = (nextPromise, x, resolve, reject) => {
 
 module.exports = MyPromise
 
-class MyPromise2 {
-  status = PENDING
-  onFulfilled = null
-  onRejected = null
-  result = null
-  reason = null
-  onFulfilledCallback = []
-  onRejectedCallback = []
-  constructor (fn) {
-    fn(this.onFulfilled, this.onRejected)
-  }
+MyPromise.prototype.finally = function(cb) {
+  return this.then(
+    value => MyPromise.resolve(cb()).then(() => value),
+    reason => MyPromise.reject(cb()).then(() => { throw reason })
+  )
+}
 
-  then() {
-    return new MyPromise2((resolve, reject) => {
+MyPromise.all = (lists) => {
+  // 返回一个promise
+  return new MyPromise((resolve, reject) => {
+    let resArr = [] // 存储处理结果的数组
+    // 判断每一项是否处理完了
+    let index = 0
+    function processData (i, data) {
+      resArr[i] = data
+      index += 1
+      if (index === lists.length) {
+        // 处理异步，要使用计数器，不能使用resArr.length === lists.length
+        resolve(resArr)
+      }
+    }
 
-    })
-  }
-  static resolve() {
+    for (let i = 0; i < lists.length; i++) {
+      if (lists[i] instanceof MyPromise) {
+        lists[i].then(data => {
+          processData(i, data)
+        }, err => {
+          reject(err) // 只要有一个传入的promise没执行成功就走reject
+          return
+        })
+      } else {
+        processData(i, lists[i])
+      }
+    }
+  })
+}
 
-  }
-  static reject() {
+// 两个方法赛跑，谁赢了就返回谁的状态
+MyPromise.race = (lists) => {
+  return new MyPromise((resolve, reject) => {
+    for (let i = 0; i < lists.length; i++) {
+      if (lists[i] instanceof MyPromise) {
+        lists[i].then(data => {
+          resolve(data) // 哪个先完成就返回哪一个的结果
+          return
+        }, err => {
+          reject(err)
+          return
+        })
+      } else {
+        resolve(lists[i])
+      }
+    }
+  })
+}
 
-  }
+// 所有方法执行完不管状态如何才返回
+MyPromise.allSettled = (lists) => {
+  return new MyPromise((resolve, reject) => {
+    lists = Array.isArray(lists) ? lists : []
+    let len = lists.length
+    const argslen = len
+    // 如果传入的是一个空数组，那么直接返回一个resolved的promise空数组对象
+    if (len === 0) return resolve([])
+    // 将传入的参数转化为数组，赋给args变量
+    let args = Array.prototype.slice.call(lists)
+    // 计算当前是否所有的promise执行完成，执行完毕则resolve
+    const compute = () => {
+      if (--len === 0) {
+        resolve(args)
+      }
+    }
+    function resolvePromise(index, value) {
+      if (value instanceof MyPromise) {
+        const then = value.then
+        this.call(value, function(val) {
+          args[index] = { status: FULFILLED, value: val }
+          compute()
+        }, function(err) {
+          args[index] = { status: REJECTED, reason: e}
+        })
+      } else {
+        args[index] = { status: FULFILLED, value: value }
+        compute()
+      }
+    }
+    for(let i = 0; i < argslen; i++) {
+      resolvePromise(i, args[i])
+    }
+  })
 }
