@@ -1,8 +1,8 @@
-var checkInclusion = function (s1, s2) {
+var checkInclusion = function (t, s) {
   // 统计所需字符及其个数
   const need = new Map()
-  for (let i = 0; i < s1.length; i++) {
-    need.set(s1[i], need.has(s1[i]) ? need.get(s1[i]) + 1 : 1)
+  for (let i = 0; i < t.length; i++) {
+    need.set(t[i], need.has(t[i]) ? need.get(t[i]) + 1 : 1)
   }
   // 定义滑动窗口
   let left = 0, right = 0
@@ -11,9 +11,9 @@ var checkInclusion = function (s1, s2) {
   // 统计当前窗口中的字符及其个数
   const window = new Map()
   // 当窗口滑动到s2的末尾时候结束循环
-  while (right < s2.length) {
+  while (right < s.length) {
     // 进入窗口的字符
-    const c = s2[right]
+    const c = s[right]
     // 扩大窗口
     right++
     // 如果进入的字符是需要的字符
@@ -27,9 +27,9 @@ var checkInclusion = function (s1, s2) {
       }
     }
     // 当窗口子串长度大于等于s1的长度的时候开始收缩窗口（排列长度一致）
-    while (right - left >= s1.length) {
+    while (right - left >= t.length) {
       // 离开窗口的字符
-      const d = s2[left]
+      const d = s[left]
       // 如果有效字符数和所需字符数一致
       if (valid === need.size) {
         // 找到符合条件的子串
