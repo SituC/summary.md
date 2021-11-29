@@ -77,3 +77,25 @@ var maxAreaOfIsland = function(grid) {
   return ans;
 };
 
+
+var connect = function(root) {
+  if (!root) return root
+  let cur = root
+  while(cur) {
+    let dummy = new Node(0)
+    let pre = dummy
+    while(cur) {
+      if (cur.left) {
+        pre.next = cur.left
+        pre = pre.next
+      }
+      if (cur.right) {
+        pre.next = cur.right
+        pre = pre.next
+      }
+      cur = cur.next
+    }
+    cur = dummy.next
+  }
+  return root
+};
