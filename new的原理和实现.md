@@ -100,12 +100,12 @@ function _new(constructor, ...ages) {
   }
   // 新建对象实例
   let obj = new Object()
-  // 将构造函数的原型绑定到新创建的对象实例上
+  // 设置原型链
   obj.__proto__ = Object.create(constructor.prototype)
-  // 调用构造函数并判断返回值
+  // 改变obj的this指向constructor
   let res = constructor.apply(obj, args)
   let isObject = typeof res === 'object' && res !== null
-  let isFunction = type res === 'function'
+  let isFunction = typeof res === 'function'
   // 如果返回值且返回值是对象类型，那么就将它作为返回值，否则就返回之前新建的对象
   return isObject || isFunction ? res : obj
 }
