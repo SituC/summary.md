@@ -2,6 +2,8 @@
  * 有序数组a从i = 0 开始向右滑动
  * 每次从i左边的a[0], a[i - 1]中随机取一个值与a[i]交换
  * 直到结束，生成一个无须数组
+ * i = 0   a[0]与[a0]
+ * i = 1  
  */
 function noSort(arr) {
   let result = [], random;
