@@ -31,3 +31,33 @@ const merge = (arr1, arr2) => {
 }
 
 console.log(sort([5,4,3,2,1]))
+
+function review(arr) {
+  let len = arr.length
+  if (len < 2) return arr
+  let mid = len >> 1
+  let leftArr = arr.slice(0, mid)
+  let rightArr = arr.slice(mid)
+  let left = review(leftArr)
+  let right = review(rightArr)
+  return merge2(left, right)
+}
+function merge2(left, right) {
+  let ans = []
+  while (left.length > 0 && right.length > 0) {
+    if (left[0] > right[0]) {
+      ans.push(right.shift())
+    } else {
+      ans.push(left.shift())
+    }
+  }
+  while(left.length) {
+    ans.push(left.shift())
+  }
+  while(right.length) {
+    ans.push(right.shift())
+  }
+  return ans
+}
+
+console.log(review([5,4,3,2,1]))

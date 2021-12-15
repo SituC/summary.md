@@ -36,3 +36,38 @@ const swap = (arr, i, j) => {
 }
 
 console.log(sort([5,4,3,2,1]))
+
+// 复习默写
+function review(arr, left = 0, right = arr.length - 1) {
+  if (arr.length > 1) {
+    let midIndex = getMidIndex(arr, left, right)
+    if (left < midIndex - 1) {
+      review(arr, left, midIndex - 1)
+    }
+    if (right > midIndex) {
+      review(arr, midIndex, right)
+    }
+  }
+  return arr
+}
+
+function getMidIndex(arr, left, right) {
+  let pivodValue = arr[Math.floor(left + (right - left) / 2)]
+  let l = left
+  let r = right
+  while(l <= r) {
+    if (arr[l] < pivodValue) {
+      l++
+    }
+    if (arr[r] > pivodValue) {
+      r--
+    }
+    if (l <= r) {
+      [arr[l], arr[r]] = [arr[r], arr[l]]
+      l++
+      r--
+    }
+  }
+  return l
+}
+
