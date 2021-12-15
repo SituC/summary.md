@@ -1,9 +1,10 @@
-import imagemin from 'imagemin'
+// import imagemin from 'imagemin'
 import fs from 'fs'
 import chalk from 'chalk'
 import shell from 'shelljs'
-import path from 'path'
-// console.log(path.resolve(__dirname, ''))
+import jimp from 'jimp'
+// import imageminPngquant from 'imagemin-pngquant'
+// import imageminJpegtran from 'imagemin-jpegtran'
 const compressPath = process.argv.slice(2).length ? process.argv.slice(2).join(' ') : '../static/cdd.md/'
 console.log(compressPath)
 const lines = shell.exec(
@@ -22,12 +23,18 @@ if (!arrs.length) {
   console.log(chalk.blue('未检测到图片改动'))
 }
 const compress = async (path) => {
-  const res = await imagemin([path], {
-    plugins: [
-      imageminMozjpeg({ quality: 70, }),
-      imageminPngquant({ quality: [0.65, 0.8] })
-    ]
+  console.log('压缩图片路径', path)
+  // const res = await imagemin([path], {
+  //   plugins: [
+  //     imageminJpegtran({ quality: 70, }),
+  //     imageminPngquant({ quality: [0.65, 0.8] })
+  //   ]
+  // })
+  const res = await jimp.read(path).then(lenna => {
+    return lenna
+      .quality(70)
   })
+  console.log('压缩', res)
   const myCompress = (again = false) => {
     try {
       fs.writeFileSync(path, res[0].data)

@@ -22,7 +22,7 @@
   "devDependencies": {
     "chalk": "^5.0.0",
     "husky": "^7.0.4",
-    "imagemin": "^8.0.1",
+    "jimp": "^0.16.1",
     "shelljs": "^0.8.4"
   },
   "husky": {
