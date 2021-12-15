@@ -21,13 +21,19 @@ const compress = async (paths) => {
   const imgPath = path.resolve(__dirname, '../', paths)
   const dirPath = dirname(path.resolve(__dirname, imgPath))
   const base = basename(path.resolve(__dirname, imgPath))
-  await Jimp.read(imgPath).then(lenna => {
-    return lenna
+  // await Jimp.read(imgPath).then(lenna => {
+  //   return lenna
+  //   .quality(70)
+  //   .write(path.resolve(__dirname, dirPath, base))
+  // }).catch(err => {
+  //   console.error(err);
+  // })
+  await Jimp.read(imgPath, (err, lenna) => {
+    if (err) throw err;
+    lenna
     .quality(70)
     .write(path.resolve(__dirname, dirPath, base))
-  }).catch(err => {
-    console.error(err);
-  })
+  });
   console.log(chalk.green('图片压缩成功', imgPath))
 }
 
@@ -40,4 +46,10 @@ if (arrs.length) {
   shell.exec('git commit -m \'perf: 压缩图片\' --no-verify')
 } else {
   shell.exec('exit 0', { silent: true })
+}
+
+const jimgImg = () => {
+  return new Promise((resolve, reject) => {
+
+  })
 }
