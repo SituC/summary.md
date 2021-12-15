@@ -40,12 +40,6 @@ const compress = async (paths) => {
   //   console.error(err);
   // })
   await jimgImg(imgPath, dirPath, base)
-  // await Jimp.read(imgPath, (err, lenna) => {
-  //   if (err) throw err;
-  //   lenna
-  //   .quality(70)
-  //   .write(path.resolve(__dirname, dirPath, base))
-  // });
   console.log(chalk.green('图片压缩成功', imgPath))
 }
 
