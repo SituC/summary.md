@@ -2,11 +2,12 @@ import imagemin from 'imagemin'
 import fs from 'fs'
 import chalk from 'chalk'
 import shell from 'shelljs'
-console.log(123123)
-const compressPath = process.argv.slice(2).length ? process.argv.slice(2).join(' ') : '../static/cdd.md'
+import path from 'path'
+// console.log(path.resolve(__dirname, ''))
+const compressPath = process.argv.slice(2).length ? process.argv.slice(2).join(' ') : '../static/cdd.md/'
 console.log(compressPath)
 const lines = shell.exec(
-  `git diff --staged --diff-filter=ACR --name-only -z ${compressPath}`,
+  `git diff --staged --diff-filter=ACR --name-only -z`,
   { silent: true }
 )
 console.log('lines', lines)
