@@ -17,6 +17,17 @@ arrs = arrs.filter(item => {
   return reg.test(item)
 })
 console.log(chalk.yellow('arrs end', arrs))
+const jimgImg = (imgPath, dirPath, base) => {
+  return new Promise((resolve, reject) => {
+    Jimp.read(imgPath, (err, lenna) => {
+      if (err) throw err;
+      lenna
+      .quality(70)
+      .write(path.resolve(__dirname, dirPath, base))
+      resolve()
+    })
+  })
+}
 const compress = async (paths) => {
   const imgPath = path.resolve(__dirname, '../', paths)
   const dirPath = dirname(path.resolve(__dirname, imgPath))
@@ -47,16 +58,4 @@ if (arrs.length) {
   shell.exec('git commit -m \'perf: 压缩图片\' --no-verify')
 } else {
   shell.exec('exit 0', { silent: true })
-}
-
-const jimgImg = (imgPath, dirPath, base) => {
-  return new Promise((resolve, reject) => {
-    Jimp.read(imgPath, (err, lenna) => {
-      if (err) throw err;
-      lenna
-      .quality(70)
-      .write(path.resolve(__dirname, dirPath, base))
-      resolve()
-    })
-  })
 }
