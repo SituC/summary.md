@@ -6,6 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "compress": "node scripts/compressImg.js",
+    "compress2": "node scripts/compressImg2.js",
     "prepare": "husky install"
   },
   "repository": {
