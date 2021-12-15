@@ -15,6 +15,7 @@ arrs = arrs.filter(item => {
   const reg = /\.(png|jpg|gif|jpeg|webp)$/
   return reg.test(item)
 })
+console.log(chalk.yellow('图片', arrs))
 const compress = async (paths) => {
   const imgPath = path.resolve(__dirname, '../', paths)
   const dirPath = dirname(path.resolve(__dirname, imgPath))
