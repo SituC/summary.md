@@ -21,3 +21,22 @@ function selectSort(arr)  {
   }
   return arr
 }
+
+const sort = (arr) => {
+  let len = arr.length
+  let min
+  for (let i = 0; i < len - 1; i++) {
+    min = i
+    for (let j = i; j < len; j++) {
+      if (arr[j] < arr[min]) {
+        min = j
+      }
+    }
+    if (min !== i) {
+      [arr[min], arr[i]] = [arr[i], arr[min]]
+    }
+  }
+  return arr
+}
+
+console.log(sort([5,4,3,10,6,2,88,2,1]))
