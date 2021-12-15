@@ -3,7 +3,7 @@ import fs from 'fs'
 import chalk from 'chalk'
 import shell from 'shelljs'
 import Jimp from 'jimp'
-import path, { basename, dirname } from 'path'
+import path, { basename, dirname } from 'path'; // extname可以获取当前文件后缀名
 const __dirname = path.resolve(path.dirname(''));
 // import imageminPngquant from 'imagemin-pngquant'
 // import imageminJpegtran from 'imagemin-jpegtran'
