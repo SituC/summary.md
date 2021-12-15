@@ -5,7 +5,7 @@ import shell from 'shelljs'
 import jimp from 'jimp'
 // import imageminPngquant from 'imagemin-pngquant'
 // import imageminJpegtran from 'imagemin-jpegtran'
-const compressPath = process.argv.slice(2).length ? process.argv.slice(2).join(' ') : '../static/cdd.md/'
+const compressPath = process.argv.slice(2).length ? process.argv.slice(2).join(' ') : '../../static/cdd.md/'
 console.log(compressPath)
 const lines = shell.exec(
   `git diff --staged --diff-filter=ACR --name-only -z`,
