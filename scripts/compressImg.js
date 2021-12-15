@@ -11,11 +11,12 @@ const lines = shell.exec(
   { silent: true }
 )
 let arrs = lines ? lines.replace(/\u0000$/, '').split('\u0000') : []
+console.log(chalk.yellow('arrs start', arrs))
 arrs = arrs.filter(item => {
-  const reg = /\.(png|jpg|gif|jpeg|webp)$/
+  const reg = /\.(png|jpg|gif|jpeg)$/
   return reg.test(item)
 })
-console.log(chalk.yellow(arrs))
+console.log(chalk.yellow('arrs end', arrs))
 const compress = async (paths) => {
   const imgPath = path.resolve(__dirname, '../', paths)
   const dirPath = dirname(path.resolve(__dirname, imgPath))
