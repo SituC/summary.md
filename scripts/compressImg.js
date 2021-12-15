@@ -9,13 +9,14 @@ const lines = shell.exec(
   `git diff --staged --diff-filter=ACR --name-only -z ${compressPath}`,
   { silent: true }
 )
-
+console.log('lines', lines)
 let arrs = lines ? lines.replace(/\u0000$/, '').split('\u0000') : []
-
+console.log('arrs1', arrs)
 arrs = arrs.filter(item => {
   const reg = /\.(png|jpg|gif|jpeg|webp)$/
   return reg.test(item)
 })
+console.log('arrs2', arrs)
 if (!arrs.length) {
   console.log(chalk.blue('未检测到图片改动'))
 }
