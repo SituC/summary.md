@@ -47,9 +47,11 @@ arrs.forEach(item => {
   compress(item)
 })
 if (arrs.length) {
-  console.log('运行脚本')
-  shell.exec('git add .')
-  shell.exec('git commit -m \'perf: 压缩图片\' --no-verify')
+  process.nextTick(() => {
+    console.log('运行脚本')
+    shell.exec('git add .')
+    shell.exec('git commit -m \'perf: 压缩图片\' --no-verify')
+  });
 } else {
   shell.exec('exit 0', { silent: true })
 }
