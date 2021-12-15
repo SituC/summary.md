@@ -1,9 +1,12 @@
-const { fstat } = require('fs')
-const imagemin = require('imagemin')
-const shell = require('shelljs')
+import imagemin from 'imagemin'
+import fs from 'fs'
+import chalk from 'chalk'
+import shell from 'shelljs'
+console.log(123123)
 const compressPath = process.argv.slice(2).length ? process.argv.slice(2).join(' ') : 'static/cdd.md'
+console.log(compressPath)
 const lines = shell.exec(
-  `git diff --staged --diff-filter=ACR --name-only -z ${compressPath}`, 
+  `git diff --staged --diff-filter=ACR --name-only -z ${compressPath}`,
   { silent: true }
 )
 
@@ -13,7 +16,9 @@ arrs = arrs.filter(item => {
   const reg = /\.(png|jpg|gif|jpeg|webp)$/
   return reg.test(item)
 })
-
+if (!arrs.length) {
+  console.log(chalk.blue('未检测到图片改动'))
+}
 const compress = async (path) => {
   const res = await imagemin([path], {
     plugins: [
@@ -23,7 +28,7 @@ const compress = async (path) => {
   })
   const myCompress = (again = false) => {
     try {
-      fstat.writeFileSync(path, res[0].data)
+      fs.writeFileSync(path, res[0].data)
       console.log(chalk.green('压缩图片成功：', path))
     } catch (err) {
       if (!again) {

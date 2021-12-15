@@ -2,8 +2,11 @@
   "name": "summary",
   "version": "1.0.0",
   "description": "",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "compress": "node scripts/compressImg.js",
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
@@ -17,6 +20,7 @@
   },
   "homepage": "https://github.com/SituC/summary.md#readme",
   "devDependencies": {
+    "chalk": "^5.0.0",
     "husky": "^7.0.4",
     "imagemin": "^8.0.1",
     "shelljs": "^0.8.4"
