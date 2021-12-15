@@ -28,12 +28,13 @@ const compress = async (paths) => {
   // }).catch(err => {
   //   console.error(err);
   // })
-  await Jimp.read(imgPath, (err, lenna) => {
-    if (err) throw err;
-    lenna
-    .quality(70)
-    .write(path.resolve(__dirname, dirPath, base))
-  });
+  await jimgImg(imgPath, dirPath, base)
+  // await Jimp.read(imgPath, (err, lenna) => {
+  //   if (err) throw err;
+  //   lenna
+  //   .quality(70)
+  //   .write(path.resolve(__dirname, dirPath, base))
+  // });
   console.log(chalk.green('图片压缩成功', imgPath))
 }
 
@@ -48,8 +49,14 @@ if (arrs.length) {
   shell.exec('exit 0', { silent: true })
 }
 
-const jimgImg = () => {
+const jimgImg = (imgPath, dirPath, base) => {
   return new Promise((resolve, reject) => {
-
+    Jimp.read(imgPath, (err, lenna) => {
+      if (err) throw err;
+      lenna
+      .quality(70)
+      .write(path.resolve(__dirname, dirPath, base))
+      resolve()
+    })
   })
 }
