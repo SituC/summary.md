@@ -43,11 +43,11 @@ const compress = async (paths) => {
   //   console.log('压缩成功')
   // });
   const dirPath = dirname(path.resolve(__dirname, imgPath))
-  const basename = basename(path.resolve(__dirname, imgPath))
+  const base = basename(path.resolve(__dirname, imgPath))
   await Jimp.read(imgPath).then(lenna => {
     return lenna
       .quality(70)
-      .write(path.resolve(__dirname, dirPath, basename))
+      .write(path.resolve(__dirname, dirPath, base))
   }).catch(err => {
     console.error(err);
   })
