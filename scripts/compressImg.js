@@ -23,11 +23,14 @@ const jimgImg = (imgPath, dirPath, base) => {
   return new Promise((resolve, reject) => {
     Jimp.read(imgPath, (err, lenna) => {
       console.log('图片压缩进行中')
-      if (err) throw err;
-      lenna
-      .quality(70)
-      .writeAsync(path.resolve(__dirname, dirPath, base))
-      resolve()
+      if (err) {
+        reject(err)
+      } else {
+        lenna
+        .quality(70)
+        .writeAsync(path.resolve(__dirname, dirPath, base))
+        resolve()
+      }
     })
   })
 }
@@ -37,11 +40,16 @@ const compress = (paths) => {
     const dirPath = dirname(path.resolve(__dirname, imgPath))
     const base = basename(path.resolve(__dirname, imgPath))
     // console.log(chalk.green('图片压缩开始'))
-    await jimgImg(imgPath, dirPath, base)
-    // shell.exec(`git add "${path.resolve(dirPath, base)}"`)
-    transferCount++
-    execGit()
-    resolve()
+    try {
+      await jimgImg(imgPath, dirPath, base)
+      // shell.exec(`git add "${path.resolve(dirPath, base)}"`)
+      transferCount++
+      execGit()
+      resolve()
+    } catch (error) {
+      console.log(error)
+    }
+
   })
 }
 arrs.forEach(async item => {
@@ -53,11 +61,11 @@ const execGit = () => {
       console.log('脚本执行')
       if (shell.exec('git add .').code !== 0) {
         shell.echo('Error: Git add failed');
-        exit(1);
+        shell.exit(1);
       }
       if (shell.exec(`git commit -m "压缩图片"`).code !== 0) {
         shell.echo('Error: Git commit failed');
-        exit(1);
+        shell.exit(1);
       }
       // shell.exec("git add .")
       // shell.exec("git commit -m '压缩图片' --no-verify")
