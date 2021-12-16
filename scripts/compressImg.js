@@ -4,7 +4,7 @@ import chalk from 'chalk'
 import shell from 'shelljs'
 import Jimp from 'jimp'
 import path, { basename, dirname } from 'path'; // extname可以获取当前文件后缀名
-import { exit } from 'process';
+let transferCount = 0
 const __dirname = path.resolve(path.dirname(''));
 const compressPath = process.argv.slice(2).length ? process.argv.slice(2).join(' ') : 'static/css.md/'
 const lines = shell.exec(
@@ -30,32 +30,30 @@ const jimgImg = (imgPath, dirPath, base) => {
     })
   })
 }
-const compress = async (paths) => {
-  const imgPath = path.resolve(__dirname, '../', paths)
-  const dirPath = dirname(path.resolve(__dirname, imgPath))
-  const base = basename(path.resolve(__dirname, imgPath))
-  const realPath = path.resolve(__dirname, dirPath, base)
-  const image = await Jimp.read(imgPath)
-  await image.quality(70)
-  // 写文件到本地
-  await image.writeAsync(realPath)
-  // return new Promise( async (resolve) => {
-  //   console.log(chalk.green('图片压缩开始'))
-  //   await jimgImg(imgPath, dirPath, base)
-  //   console.log(chalk.green('图片压缩成功', imgPath))
-  //   resolve()
-  // })
+const compress = (paths) => {
+  return new Promise( async (resolve) => {
+    const imgPath = path.resolve(__dirname, '../', paths)
+    const dirPath = dirname(path.resolve(__dirname, imgPath))
+    const base = basename(path.resolve(__dirname, imgPath))
+    console.log(chalk.green('图片压缩开始'))
+    await jimgImg(imgPath, dirPath, base)
+    console.log(chalk.green('图片压缩成功', imgPath))
+    transferCount++
+    execGit()
+    resolve()
+  })
 }
-arrs.forEach(item => {
-  compress(item)
+arrs.forEach(async item => {
+  await compress(item)
 })
-if (arrs.length) {
-  // setTimeout(() => {
-  console.log('运行脚本')
-  exit(1)
-  shell.exec('git add .')
-  shell.exec('git commit -m \'perf: 压缩图片\' --no-verify')
-  // }, 3000)
-} else {
-  shell.exec('exit 0', { silent: true })
+const execGit = () => {
+  if (arrs.length == transferCount) {
+    // setTimeout(() => {
+    console.log('运行脚本')
+    shell.exec('git add .')
+    shell.exec('git commit -m \'perf: 压缩图片\' --no-verify')
+    // }, 3000)
+  } else {
+    shell.exec('exit 0', { silent: true })
+  }
 }
