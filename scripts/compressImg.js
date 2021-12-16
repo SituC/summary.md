@@ -18,9 +18,9 @@ arrs = arrs.filter(item => {
 })
 // console.log(chalk.yellow('arrs end', arrs))
 const jimgImg = (imgPath, dirPath, base) => {
-  console.log('图片压缩进行中')
   return new Promise((resolve, reject) => {
     Jimp.read(imgPath, (err, lenna) => {
+      console.log('图片压缩进行中')
       if (err) throw err;
       lenna
       .quality(70)
