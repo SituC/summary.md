@@ -58,20 +58,18 @@ arrs.forEach(async item => {
 })
 const execGit = () => {
   if (arrs.length == transferCount) {
-    process.nextTick(() => {
-      console.log('脚本执行')
-      if (shell.exec('git add .').code !== 0) {
-        shell.echo('Error: Git add failed');
-        shell.exit(1);
-      }
-      shell.exec('git status')
-      if (shell.exec(`git commit -m "压缩图片"`).code !== 0) {
-        shell.echo('Error: Git commit failed');
-        shell.exit(1);
-      }
-      // shell.exec("git add .")
-      // shell.exec("git commit -m '压缩图片' --no-verify")
-    })
+    console.log('脚本执行')
+    if (shell.exec('git add .').code !== 0) {
+      shell.echo('Error: Git add failed');
+      shell.exit(1);
+    }
+    shell.exec('git status')
+    if (shell.exec(`git commit -m "压缩图片"`).code !== 0) {
+      shell.echo('Error: Git commit failed');
+      shell.exit(1);
+    }
+    // shell.exec("git add .")
+    // shell.exec("git commit -m '压缩图片' --no-verify")
   }
 }
 if (!arrs.length) {
