@@ -4,6 +4,7 @@ import chalk from 'chalk'
 import shell from 'shelljs'
 import Jimp from 'jimp'
 import path, { basename, dirname } from 'path'; // extname可以获取当前文件后缀名
+import { exit } from 'process';
 const __dirname = path.resolve(path.dirname(''));
 const compressPath = process.argv.slice(2).length ? process.argv.slice(2).join(' ') : 'static/css.md/'
 const lines = shell.exec(
@@ -45,15 +46,16 @@ const compress = async (paths) => {
   //   resolve()
   // })
 }
-arrs.forEach(async item => {
-  await compress(item)
+arrs.forEach(item => {
+  compress(item)
 })
 if (arrs.length) {
-  setTimeout(() => {
-    console.log('运行脚本')
-    shell.exec('git add .')
-    shell.exec('git commit -m \'perf: 压缩图片\' --no-verify')
-  }, 3000)
+  // setTimeout(() => {
+  console.log('运行脚本')
+  exit(1)
+  shell.exec('git add .')
+  shell.exec('git commit -m \'perf: 压缩图片\' --no-verify')
+  // }, 3000)
 } else {
   shell.exec('exit 0', { silent: true })
 }
