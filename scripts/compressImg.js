@@ -48,13 +48,11 @@ arrs.forEach(async item => {
 })
 const execGit = () => {
   if (arrs.length == transferCount) {
-    // setTimeout(() => {
-    process.nextTick(() => {
+    setTimeout(() => {
       console.log('运行脚本')
       shell.exec('git add .')
       shell.exec('git commit -m \'perf: 压缩图片\' --no-verify')
-    })
-    // }, 3000)
+    }, 1000)
   } else {
     shell.exec('exit 0', { silent: true })
   }
