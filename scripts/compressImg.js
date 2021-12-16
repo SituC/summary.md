@@ -37,16 +37,18 @@ const compress = (paths) => {
     console.log(chalk.green('图片压缩开始'))
     await jimgImg(imgPath, dirPath, base)
     console.log(chalk.green('图片压缩成功', imgPath))
+    shell.exec('git add .')
+    shell.exec('git commit -m \'perf: 压缩图片\' --no-verify')
     resolve()
   })
 }
 arrs.forEach(async item => {
   await compress(item)
 })
-if (arrs.length) {
-  console.log('运行脚本')
-  shell.exec('git add .')
-  shell.exec('git commit -m \'perf: 压缩图片\' --no-verify')
-} else {
-  shell.exec('exit 0', { silent: true })
-}
+// if (arrs.length) {
+//   console.log('运行脚本')
+//   shell.exec('git add .')
+//   shell.exec('git commit -m \'perf: 压缩图片\' --no-verify')
+// } else {
+//   shell.exec('exit 0', { silent: true })
+// }
