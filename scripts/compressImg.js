@@ -67,8 +67,11 @@ const execGit = () => {
     //   shell.echo('Error: Git commit failed');
     //   shell.exit(1);
     // }
-    shell.exec("git add .")
-    shell.exec("git commit -m '压缩图片'")
+    setTimeout(() => {
+      shell.exec("git add .")
+      shell.exec("git commit -m '压缩图片'")
+    }, 2000)
+    shell.exit(0)
   }
 }
 if (!arrs.length) {
