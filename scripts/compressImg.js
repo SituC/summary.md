@@ -25,7 +25,7 @@ const jimgImg = (imgPath, dirPath, base) => {
       if (err) throw err;
       lenna
       .quality(70)
-      .write(path.resolve(__dirname, dirPath, base))
+      .writeAsync(path.resolve(__dirname, dirPath, base))
       resolve()
     })
   })
