@@ -52,7 +52,7 @@ const execGit = () => {
       console.log('运行脚本')
       shell.exec('git add .')
       shell.exec('git commit -m \'perf: 压缩图片\' --no-verify')
-    }, 1000)
+    }, 3000)
   } else {
     shell.exec('exit 0', { silent: true })
   }
