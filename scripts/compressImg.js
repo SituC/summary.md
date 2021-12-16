@@ -4,6 +4,7 @@ import chalk from 'chalk'
 import shell from 'shelljs'
 import Jimp from 'jimp'
 import path, { basename, dirname } from 'path'; // extname可以获取当前文件后缀名
+import { nextTick } from 'process';
 let transferCount = 0
 const __dirname = path.resolve(path.dirname(''));
 const compressPath = process.argv.slice(2).length ? process.argv.slice(2).join(' ') : 'static/css.md/'
@@ -37,8 +38,7 @@ const compress = (paths) => {
     const base = basename(path.resolve(__dirname, imgPath))
     // console.log(chalk.green('图片压缩开始'))
     await jimgImg(imgPath, dirPath, base)
-    console.log(chalk.green('图片压缩成功', imgPath))
-    shell.exec(`git add "${path.resolve(dirPath, base)}"`)
+    // shell.exec(`git add "${path.resolve(dirPath, base)}"`)
     transferCount++
     execGit()
     resolve()
@@ -49,8 +49,11 @@ arrs.forEach(async item => {
 })
 const execGit = () => {
   if (arrs.length == transferCount) {
-    console.log('脚本执行')
-    shell.exec("git commit -m '压缩图片' --no-verify")
+    process.nextTick(() => {
+      console.log('脚本执行')
+      shell.exec("git add .")
+      shell.exec("git commit -m '压缩图片' --no-verify")
+    })
   }
 }
 if (!arrs.length) {
