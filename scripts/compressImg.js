@@ -38,7 +38,7 @@ const compress = (paths) => {
     // console.log(chalk.green('图片压缩开始'))
     await jimgImg(imgPath, dirPath, base)
     console.log(chalk.green('图片压缩成功', imgPath))
-    shell.exec(`git add ${path.resolve(__dirname, dirPath, base)}`)
+    shell.exec(`git add '${path.resolve(__dirname, dirPath, base)}'`)
     transferCount++
     execGit()
     resolve()
