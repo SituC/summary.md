@@ -33,28 +33,17 @@ const compress = async (paths) => {
   const imgPath = path.resolve(__dirname, '../', paths)
   const dirPath = dirname(path.resolve(__dirname, imgPath))
   const base = basename(path.resolve(__dirname, imgPath))
-  // await Jimp.read(imgPath).then(lenna => {
-  //   return lenna
-  //   .quality(70)
-  //   .write(path.resolve(__dirname, dirPath, base))
-  // }).catch(err => {
-  //   console.error(err);
-  // })
   console.log(chalk.green('图片压缩开始'))
-  // console.log(chalk.yellow('arrs end', arrs))
   await jimgImg(imgPath, dirPath, base)
   console.log(chalk.green('图片压缩成功', imgPath))
 }
-
 arrs.forEach(item => {
   compress(item)
 })
 if (arrs.length) {
-  process.nextTick(() => {
-    console.log('运行脚本')
-    shell.exec('git add .')
-    shell.exec('git commit -m \'perf: 压缩图片\' --no-verify')
-  });
+  console.log('运行脚本')
+  shell.exec('git add .')
+  shell.exec('git commit -m \'perf: 压缩图片\' --no-verify')
 } else {
   shell.exec('exit 0', { silent: true })
 }
