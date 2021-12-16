@@ -39,26 +39,21 @@ const compress = (paths) => {
     await jimgImg(imgPath, dirPath, base)
     console.log(chalk.green('图片压缩成功', imgPath))
     transferCount++
-    // execGit()
+    execGit()
     resolve()
   })
 }
 arrs.forEach(async item => {
   await compress(item)
 })
-// const execGit = () => {
-//   if (arrs.length == transferCount) {
-//     console.log('运行脚本')
-//     shell.exec('git add .')
-//     shell.exec("git commit -m '压缩图片22222' --no-verify")
-//   } else {
-//     shell.exec('exit 0', { silent: true })
-//   }
-// }
-if (arrs.length) {
-  console.log('运行脚本')
-  shell.exec('git add .')
-  shell.exec("git commit -m '压缩图片22222' --no-verify")
-} else {
+const execGit = () => {
+  if (arrs.length == transferCount) {
+    console.log('运行脚本')
+    shell.exec('git add .')
+    shell.exec("git commit -m '压缩图片22222' --no-verify")
+  }
+}
+if (!arrs.length) {
   shell.exec('exit 0', { silent: true })
 }
+
