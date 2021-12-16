@@ -18,6 +18,9 @@ arrs = arrs.filter(item => {
   const reg = /\.(png|jpg|gif|jpeg)$/
   return reg.test(item)
 })
+if (arrs.length > 0) {
+  console.log('检测到图片更新，进行压缩')
+}
 // console.log(chalk.yellow('arrs end', arrs))
 const jimgImg = (imgPath, dirPath, base) => {
   return new Promise((resolve, reject) => {
