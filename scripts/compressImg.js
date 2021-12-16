@@ -49,7 +49,7 @@ arrs.forEach(async item => {
 const execGit = () => {
   if (arrs.length == transferCount) {
     shell.exec('git add .', { silent: true })
-    shell.exec("git commit -m 'feat: 压缩图片' --no-verify", { silent: true })
+    shell.exec("git commit -m '压缩图片' --no-verify", { silent: true })
   }
 }
 if (!arrs.length) {
