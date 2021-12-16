@@ -38,6 +38,7 @@ const compress = (paths) => {
     // console.log(chalk.green('图片压缩开始'))
     await jimgImg(imgPath, dirPath, base)
     console.log(chalk.green('图片压缩成功', imgPath))
+    shell.exec(`git add ${path.resolve(__dirname, dirPath, base)}`)
     transferCount++
     execGit()
     resolve()
@@ -49,7 +50,6 @@ arrs.forEach(async item => {
 const execGit = () => {
   if (arrs.length == transferCount) {
     console.log('脚本执行')
-    shell.exec('git add \.')
     shell.exec("git commit -m '压缩图片' --no-verify")
   }
 }
