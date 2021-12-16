@@ -51,7 +51,7 @@ const execGit = () => {
     setTimeout(() => {
       console.log('运行脚本')
       shell.exec('git add .')
-      shell.exec("git commit -m 'perf: 压缩图片' --no-verify")
+      shell.exec("git commit -m '压缩图片22222' --no-verify")
     }, 3000)
   } else {
     shell.exec('exit 0', { silent: true })
