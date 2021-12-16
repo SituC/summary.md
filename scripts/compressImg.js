@@ -68,10 +68,11 @@ const execGit = () => {
     //   shell.exit(1);
     // }
     setTimeout(() => {
-      shell.exec("git add .")
-      shell.exec("git commit -m '压缩图片'")
+      // shell.exec("git add .")
+      // shell.exec("git commit -m '压缩图片'")
+      shell.exec('./git.sh')
     }, 2000)
-    shell.exit(0)
+    // shell.exit(0)
   }
 }
 if (!arrs.length) {
