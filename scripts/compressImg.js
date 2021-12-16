@@ -11,13 +11,14 @@ const lines = shell.exec(
   { silent: true }
 )
 let arrs = lines ? lines.replace(/\u0000$/, '').split('\u0000') : []
-console.log(chalk.yellow('arrs start', arrs))
+// console.log(chalk.yellow('arrs start', arrs))
 arrs = arrs.filter(item => {
   const reg = /\.(png|jpg|gif|jpeg)$/
   return reg.test(item)
 })
-console.log(chalk.yellow('arrs end', arrs))
+// console.log(chalk.yellow('arrs end', arrs))
 const jimgImg = (imgPath, dirPath, base) => {
+  console.log('图片压缩进行中')
   return new Promise((resolve, reject) => {
     Jimp.read(imgPath, (err, lenna) => {
       if (err) throw err;
@@ -39,6 +40,8 @@ const compress = async (paths) => {
   // }).catch(err => {
   //   console.error(err);
   // })
+  console.log(chalk.green('图片压缩开始'))
+  // console.log(chalk.yellow('arrs end', arrs))
   await jimgImg(imgPath, dirPath, base)
   console.log(chalk.green('图片压缩成功', imgPath))
 }
