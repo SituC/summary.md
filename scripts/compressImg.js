@@ -51,8 +51,16 @@ const execGit = () => {
   if (arrs.length == transferCount) {
     process.nextTick(() => {
       console.log('脚本执行')
-      shell.exec("git add .")
-      shell.exec("git commit -m '压缩图片' --no-verify")
+      if (shell.exec('git add .').code !== 0) {
+        echo('Error: Git add failed');
+        exit(1);
+      }
+      if (shell.exec(`git commit -m "压缩图片"`).code !== 0) {
+        echo('Error: Git commit failed');
+        exit(1);
+      }
+      // shell.exec("git add .")
+      // shell.exec("git commit -m '压缩图片' --no-verify")
     })
   }
 }
