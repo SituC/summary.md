@@ -29,16 +29,19 @@ const jimgImg = (imgPath, dirPath, base) => {
     })
   })
 }
-const compress = async (paths) => {
-  const imgPath = path.resolve(__dirname, '../', paths)
-  const dirPath = dirname(path.resolve(__dirname, imgPath))
-  const base = basename(path.resolve(__dirname, imgPath))
-  console.log(chalk.green('图片压缩开始'))
-  await jimgImg(imgPath, dirPath, base)
-  console.log(chalk.green('图片压缩成功', imgPath))
+const compress = (paths) => {
+  return new Promise( async (resolve) => {
+    const imgPath = path.resolve(__dirname, '../', paths)
+    const dirPath = dirname(path.resolve(__dirname, imgPath))
+    const base = basename(path.resolve(__dirname, imgPath))
+    console.log(chalk.green('图片压缩开始'))
+    await jimgImg(imgPath, dirPath, base)
+    console.log(chalk.green('图片压缩成功', imgPath))
+    resolve()
+  })
 }
-arrs.forEach(item => {
-  compress(item)
+arrs.forEach(async item => {
+  await compress(item)
 })
 if (arrs.length) {
   console.log('运行脚本')
