@@ -4,7 +4,7 @@ import chalk from 'chalk'
 import shell from 'shelljs'
 import Jimp from 'jimp'
 import path, { basename, dirname } from 'path'; // extname可以获取当前文件后缀名
-import { nextTick } from 'process';
+import { exit, nextTick } from 'process';
 let transferCount = 0
 const __dirname = path.resolve(path.dirname(''));
 const compressPath = process.argv.slice(2).length ? process.argv.slice(2).join(' ') : 'static/css.md/'
@@ -24,7 +24,8 @@ const jimgImg = (imgPath, dirPath, base) => {
     Jimp.read(imgPath, (err, lenna) => {
       console.log('图片压缩进行中')
       if (err) {
-        reject(err)
+        // reject(err)
+        exit(0)
       } else {
         lenna
         .quality(70)
