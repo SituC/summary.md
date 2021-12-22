@@ -51,7 +51,7 @@ class MyPromise {
       }
     }
   }
-
+  
   then(onFulfilled, onRejected) {
     // 如果不传，就使用默认函数
     onFulfilled = typeof onFulfilled === 'function' ? onFulfilled : value => value;
