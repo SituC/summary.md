@@ -94,7 +94,7 @@ class MyPromise {
   // 定义静态属性
   static resolve(parameter) {
     // 如果传入promise直接返回
-    if (paramter instanceof MyPromise) {
+    if (parameter instanceof MyPromise) {
       return parameter
     }
     // 转成常规方式

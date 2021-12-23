@@ -87,7 +87,7 @@ class MyPromise {
 }
 const resolvePromise = (nextPromise, x, resolve, reject) => {
   if (nextPromise === x) {
-    return reject(new TypeError('error'))
+    return reject(new TypeError('不能返回自身，会死循环'))
   }
     if (x instanceof MyPromise) {
       x.then(resolve, reject)
