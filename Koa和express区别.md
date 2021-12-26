@@ -17,9 +17,11 @@
 })(req, res)
 
 ```
+<img src="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2019/10/16/16dd415630d2423c~tplv-t2oaga2asx-watermark.awebp">
 
-- koa: 采用promise形式，不像express有两个layer层，koa只有一个，用一个middleWare数组维护中间件，中间件执行顺序是采用洋葱模型，通过middleMare下标判断当前中间件是哪个，当执行next时，通过下标+1递归执行middleWare的下一个中间件，如果出现异常则之后的中间件会被终止，直接reject出错误。
+- koa: 采用promise形式，不像express有两个layer层，koa只有一个，用一个middleWare数组维护中间件，中间件执行顺序是采用洋葱模型，通过middleMare下标判断当前中间件是哪个，当执行next时，通过下标+1递归执行middleWare的下一个中间件，如果出现异常则之后的中间件会被终止，直接reject出错误。然后再进行`handleRequest`通过`delegate`对路由事件进行委托，委托自定义的`request`,`response`。`request`和`response`又对node原生的req和res进行方法代理，自定义了方法。
 ```js
+  // middleWare收集处理
   return function (context, next) {
     // last called middleware #
     let index = -1
@@ -40,3 +42,21 @@
     }
   }
 ```
+
+```js
+  // 先收集middleware，再执行路由拦截，执行方法
+  callback() {
+    const fn = compose(this.middleware);
+
+    if (!this.listenerCount('error')) this.on('error', this.onerror);
+
+    const handleRequest = (req, res) => {
+      const ctx = this.createContext(req, res);
+      return this.handleRequest(ctx, fn);
+    };
+
+    return handleRequest;
+  }
+```
+
+<img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/aa709ad09bc94c0895c2b9a1ef355926~tplv-k3u1fbpfcp-watermark.awebp">
