@@ -1,6 +1,5 @@
 function curry(fn) {
   const ctx = this;
-  debugger
   function inner(...args) {
     if (args.length === fn.length) return fn.call(ctx, ...args);
     return (...innerArgs) => inner.call(ctx, ...args, ...innerArgs);

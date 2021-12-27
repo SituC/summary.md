@@ -1,3 +1,30 @@
+function compose(...fns) {
+    return (...args) => fns.reduceRight((acc, cur) => cur(acc), ...args);
+  }
+  
+  function a(msg) {
+    return msg + "a";
+  }
+  function b(msg) {
+    return msg + "b";
+  }
+  function c(msg) {
+    return msg + "c";
+  }
+  
+  const f = compose(
+    a,
+    b,
+    c
+  );
+  console.log(f("hello"));
+  
+
+const compose = (...fns) => {
+    return (...args) => fns.reduceRight((acc, cur) => cur(acc), ...args)
+}
+
+
 // 先序
 function xxx(root) {
     if (!root) return []
