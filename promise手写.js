@@ -208,6 +208,7 @@ MyPromise.allSettled = (lists) => {
           compute()
         }, function(err) {
           args[index] = { status: REJECTED, reason: e}
+          compute()
         })
       } else {
         args[index] = { status: FULFILLED, value: value }
