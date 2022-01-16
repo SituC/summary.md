@@ -24,6 +24,9 @@ const compose = (...fns) => {
     return (...args) => fns.reduceRight((acc, cur) => cur(acc), ...args)
 }
 
+const compose = (...fns) => {
+    return (...arg) => fns.reduceRight((acc, cur) => cur(acc), ...arg)
+}
 
 // 先序
 function xxx(root) {
