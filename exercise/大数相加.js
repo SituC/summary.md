@@ -10,7 +10,8 @@ function bigNumberSum(a, b) {
 
   for (let i = a.length - 1; i > -1; i--){
     const sum = carried + +a[i] + +b[i]
-    sum > 9 ? carried = 1 : carrid = 0
+    sum > 9 ? carried = 1 : carried = 0
+    console.log(sum)
     res[i] = sum % 10
   }
   if (carried === 1) {
