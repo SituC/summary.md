@@ -1,6 +1,6 @@
 // 又叫观察者模式
-// 发布基类、订阅基类
-// 业务发布类、业务订阅类
+
+// 发布基类
 class Publisher {
   constructor() {
     this.observes = [] // 订阅发布
@@ -27,9 +27,18 @@ class Publisher {
   }
 }
 
+// 订阅基类
 class Observe {
   constructor() {
   }
   update() {
+  }
+}
+
+// 业务发布类
+class MyPublisher extends Publisher{
+  constructor() {
+    super()
+    
   }
 }

@@ -1,6 +1,4 @@
 function deepClone(obj, hash = new WeakMap()) {
-debugger
-console.log('obj', obj)
 if (obj === null) return obj; // 如果是null或者undefined我就不进行拷贝操作
 if (obj instanceof Date) return new Date(obj);
 if (obj instanceof RegExp) return new RegExp(obj);
@@ -14,7 +12,7 @@ hash.set(obj, cloneObj);
 for (let key in obj) {
   if (obj.hasOwnProperty(key)) {
     // 实现一个递归拷贝
-    console.log('value', key, deepClone(obj[key], hash))
+    // console.log('value', key, deepClone(obj[key], hash))
     cloneObj[key] = deepClone(obj[key], hash);
   }
 }
