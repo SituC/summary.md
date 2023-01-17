@@ -1,2 +1,4 @@
 .history/
+.husky
+.vscode
 node_modules
