@@ -22,7 +22,7 @@
 协商缓存：if-none-match 搭配 etag。 if-modifed-since搭配 last-modified。命中协商缓存。请求返回304。如果不一致有改动，则返回新的过期时间或etag，并返回200.
 什么是from disk cache和from memory cache：强缓存触发，也就是硬盘加载还是从内存加载。先查找内存，再查找硬盘，如果都没有则进行网络请求之后再缓存到硬盘和内存。
 
-服务器处理请求并返回HTTP报文
+# 服务器处理请求并返回HTTP报文
 
 # 浏览器解析渲染页面
 1. 构建dom树，从上到下解析html文档生成dom节点树
@@ -34,3 +34,14 @@
 7. 绘制：遍历渲染树绘制所有节点，为每一个节点适应对应的样式
 连接结束。
 
+
+<img src="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2020/7/4/1731a0797ee78e56~tplv-t2oaga2asx-zoom-in-crop-mark:4536:0:0:0.awebp">
+
+- 构建请求
+- 查找缓存
+- 准备 IP 和端口
+- 等待 TCP 队列
+- 建立 TCP 连接
+- 发起 HTTP 请求
+- 服务器处理请求
+- 服务器返回请求和断开连接
